@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dzqc.cloud.dao.MedicalrecordMapper">
+
+  <resultMap id="BaseResultMap" type="com.dzqc.cloud.entity.Medicalrecord">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="record_code" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="phone" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="department_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="seektime" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="description" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="guomishi" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="diagnosis" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="prescription" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="comment" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="remark" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, record_code, phone, department_id, seektime, description, guomishi, diagnosis, 
+    prescription, comment, remark,diagnostictype,user_id,doc_id
+  </sql>
+
+  <resultMap id="BaseResultMap2" type="com.dzqc.cloud.entity.Medicalrecord" >
+      <id column="mid" property="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <result column="record_code" property="recordCode" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <result column="phone" property="phone" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <result column="department_id" property="departmentId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <result column="seektime" property="seektime" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <result column="description" property="description" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <result column="guomishi" property="guomishi" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <result column="diagnosis" property="diagnosis" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <result column="prescription" property="prescription" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <result column="comment" property="comment" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <result column="remark" property="remark" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <result column="diagnostictype" property="diagnostictype"/>
+    <association property="userinfo" javaType="com.dzqc.cloud.entity.Userinfo"  autoMapping="true">
+    </association>
+    <association property="departmentinfo" javaType="com.dzqc.cloud.entity.Departmentinfo"
+                 column="department_id"
+       select="com.dzqc.cloud.dao.DepartmentinfoMapper.selectByPrimaryKey" autoMapping="true"/>
+
+    <association property="empinfo" javaType="com.dzqc.cloud.entity.Empinfo"
+         column="doc_id" select="com.dzqc.cloud.dao.EmpinfoMapper.selectByPrimaryKey" autoMapping="true"/>
+  </resultMap>
+
+    <resultMap id="BaseResultMap3" type="com.dzqc.cloud.entity.Medicalrecord" >
+
+        <id column="mid" property="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+        <result column="record_code" property="recordCode" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result column="phone" property="phone" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result column="seektime" property="seektime" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result column="description" property="description" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result column="guomishi" property="guomishi" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result column="diagnosis" property="diagnosis" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result column="prescription" property="prescription" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result column="comment" property="comment" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result column="remark" property="remark" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <result column="diagnostictype" property="diagnostictype"/>
+
+        <association property="departmentinfo" javaType="com.dzqc.cloud.entity.Departmentinfo" column="department_id" select="com.dzqc.cloud.dao.DepartmentinfoMapper.selectByPrimaryKey" autoMapping="true"/>
+        <association property="empinfo" javaType="com.dzqc.cloud.entity.Empinfo" column="doc_id" select="com.dzqc.cloud.dao.EmpinfoMapper.selectByPrimaryKey" autoMapping="true"/>
+        <association property="userinfo" javaType="com.dzqc.cloud.entity.Userinfo" column="user_id" select="com.dzqc.cloud.dao.UserinfoMapper.selectByPrimaryKey" autoMapping="true"/>
+    </resultMap>
+
+  <sql id="Base_Column_List2">
+    m.id mid, record_code, m.phone phone, department_id, seektime, description, guomishi, diagnosis,
+    prescription, comment, remark,diagnostictype,user_id,doc_id,username,validatecode,gender,
+    di_type,address,birthday
+  </sql>
+
+  <!--查询所有-->
+  <select id="selectByAll" resultMap="BaseResultMap2">
+      select <include refid="Base_Column_List2"/> from medicalrecord m join userinfo u on m.user_id=u.id
+      where m.state=1
+      <if test="username!=null">
+         and  username like concat("%",#{username},"%")
+      </if>
+      <if test="seektime!=null">
+         and  seektime like concat("%",#{seektime},"%")
+      </if>
+  </select>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer"
+          resultMap="BaseResultMap3">
+    select
+    <include refid="Base_Column_List" />
+    from medicalrecord
+    where id = #{id,jdbcType=INTEGER} and state=1
+  </select>
+
+  <update id="updateStateByPrimaryKey">
+    update medicalrecord set state=0 where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from medicalrecord
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.dzqc.cloud.entity.Medicalrecord">
+    insert into medicalrecord (id, record_code, phone, 
+      department_id, seektime, description, 
+      guomishi, diagnosis, prescription, 
+      comment, remark,user_id,doc_id)
+    values (#{id,jdbcType=INTEGER}, #{recordCode,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{departmentId,jdbcType=INTEGER}, #{seektime,jdbcType=TIMESTAMP}, #{description,jdbcType=VARCHAR}, 
+      #{guomishi,jdbcType=VARCHAR}, #{diagnosis,jdbcType=VARCHAR}, #{prescription,jdbcType=VARCHAR}, 
+      #{comment,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},#{user_id},#{doc_id})
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.dzqc.cloud.entity.Medicalrecord">
+    insert into medicalrecord
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="recordCode != null">
+        record_code,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="departmentId != null">
+        department_id,
+      </if>
+      <if test="seektime != null">
+        seektime,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="guomishi != null">
+        guomishi,
+      </if>
+      <if test="diagnosis != null">
+        diagnosis,
+      </if>
+      <if test="prescription != null">
+        prescription,
+      </if>
+      <if test="comment != null">
+        comment,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="docId != null">
+        doc_id,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="createTime != null">
+        createtime,
+      </if>
+      <if test="updateTime != null">
+        updatetime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="recordCode != null">
+        #{recordCode,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null">
+        #{departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="seektime != null">
+        #{seektime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="guomishi != null">
+        #{guomishi,jdbcType=VARCHAR},
+      </if>
+      <if test="diagnosis != null">
+        #{diagnosis,jdbcType=VARCHAR},
+      </if>
+      <if test="prescription != null">
+        #{prescription,jdbcType=VARCHAR},
+      </if>
+      <if test="comment != null">
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId},
+      </if>
+      <if test="docId != null">
+        #{docId},
+      </if>
+      <if test="state != null">
+        #{state},
+      </if>
+      <if test="createTime != null">
+        #{createTime},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.dzqc.cloud.entity.Medicalrecord">
+    update medicalrecord
+    <set>
+      <if test="recordCode != null">
+        record_code = #{recordCode,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null">
+        department_id = #{departmentId,jdbcType=INTEGER},
+      </if>
+      <if test="seektime != null">
+        seektime = #{seektime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="guomishi != null">
+        guomishi = #{guomishi,jdbcType=VARCHAR},
+      </if>
+      <if test="diagnosis != null">
+        diagnosis = #{diagnosis,jdbcType=VARCHAR},
+      </if>
+      <if test="prescription != null">
+        prescription = #{prescription,jdbcType=VARCHAR},
+      </if>
+      <if test="comment != null">
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="docId != null">
+        doc_id = #{docId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.dzqc.cloud.entity.Medicalrecord">
+    update medicalrecord
+    set record_code = #{recordCode,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      department_id = #{departmentId,jdbcType=INTEGER},
+      seektime = #{seektime,jdbcType=TIMESTAMP},
+      description = #{description,jdbcType=VARCHAR},
+      guomishi = #{guomishi,jdbcType=VARCHAR},
+      diagnosis = #{diagnosis,jdbcType=VARCHAR},
+      prescription = #{prescription,jdbcType=VARCHAR},
+      comment = #{comment,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      doc_id = #{docId,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

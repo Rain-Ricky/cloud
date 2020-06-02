@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dzqc.cloud.dao.UserinfoMapper" >
+  <resultMap id="BaseResultMap" type="com.dzqc.cloud.entity.Userinfo" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="username" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="password" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="roleid" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="phone" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="validatecode" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="cid" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="birthday" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="gender" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="di_type" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="frontimg" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="backimg" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="address" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="bedno" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="departmentid" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="doctorid" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="nurseid" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="instatus" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="state" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, username, password, roleid, phone, validatecode, cid, birthday, gender, di_type, 
+    frontimg, backimg, address, bedno, departmentid, doctorid, nurseid, instatus, state
+  </sql>
+  <!--根据手机号查询用户信息-->
+  <select id="selectByPhone" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include> from userinfo where phone = #{phone}
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from userinfo
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from userinfo
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.dzqc.cloud.entity.Userinfo" >
+    insert into userinfo (id, username, password, 
+      roleid, phone, validatecode, 
+      cid, birthday, gender, 
+      di_type, frontimg, backimg, 
+      address, bedno, departmentid, 
+      doctorid, nurseid, instatus, 
+      state)
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{roleid,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, #{validatecode,jdbcType=VARCHAR}, 
+      #{cid,jdbcType=VARCHAR}, #{birthday,jdbcType=TIMESTAMP}, #{gender,jdbcType=VARCHAR}, 
+      #{diType,jdbcType=INTEGER}, #{frontimg,jdbcType=VARCHAR}, #{backimg,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{bedno,jdbcType=VARCHAR}, #{departmentid,jdbcType=INTEGER}, 
+      #{doctorid,jdbcType=INTEGER}, #{nurseid,jdbcType=INTEGER}, #{instatus,jdbcType=INTEGER}, 
+      #{state,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dzqc.cloud.entity.Userinfo" >
+    insert into userinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="roleid != null" >
+        roleid,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="validatecode != null" >
+        validatecode,
+      </if>
+      <if test="cid != null" >
+        cid,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="gender != null" >
+        gender,
+      </if>
+      <if test="diType != null" >
+        di_type,
+      </if>
+      <if test="frontimg != null" >
+        frontimg,
+      </if>
+      <if test="backimg != null" >
+        backimg,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="bedno != null" >
+        bedno,
+      </if>
+      <if test="departmentid != null" >
+        departmentid,
+      </if>
+      <if test="doctorid != null" >
+        doctorid,
+      </if>
+      <if test="nurseid != null" >
+        nurseid,
+      </if>
+      <if test="instatus != null" >
+        instatus,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="roleid != null" >
+        #{roleid,jdbcType=INTEGER},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="validatecode != null" >
+        #{validatecode,jdbcType=VARCHAR},
+      </if>
+      <if test="cid != null" >
+        #{cid,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="diType != null" >
+        #{diType,jdbcType=INTEGER},
+      </if>
+      <if test="frontimg != null" >
+        #{frontimg,jdbcType=VARCHAR},
+      </if>
+      <if test="backimg != null" >
+        #{backimg,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="bedno != null" >
+        #{bedno,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentid != null" >
+        #{departmentid,jdbcType=INTEGER},
+      </if>
+      <if test="doctorid != null" >
+        #{doctorid,jdbcType=INTEGER},
+      </if>
+      <if test="nurseid != null" >
+        #{nurseid,jdbcType=INTEGER},
+      </if>
+      <if test="instatus != null" >
+        #{instatus,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dzqc.cloud.entity.Userinfo" >
+    update userinfo
+    <set >
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="roleid != null" >
+        roleid = #{roleid,jdbcType=INTEGER},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="validatecode != null" >
+        validatecode = #{validatecode,jdbcType=VARCHAR},
+      </if>
+      <if test="cid != null" >
+        cid = #{cid,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="diType != null" >
+        di_type = #{diType,jdbcType=INTEGER},
+      </if>
+      <if test="frontimg != null" >
+        frontimg = #{frontimg,jdbcType=VARCHAR},
+      </if>
+      <if test="backimg != null" >
+        backimg = #{backimg,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="bedno != null" >
+        bedno = #{bedno,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentid != null" >
+        departmentid = #{departmentid,jdbcType=INTEGER},
+      </if>
+      <if test="doctorid != null" >
+        doctorid = #{doctorid,jdbcType=INTEGER},
+      </if>
+      <if test="nurseid != null" >
+        nurseid = #{nurseid,jdbcType=INTEGER},
+      </if>
+      <if test="instatus != null" >
+        instatus = #{instatus,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dzqc.cloud.entity.Userinfo" >
+    update userinfo
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      roleid = #{roleid,jdbcType=INTEGER},
+      phone = #{phone,jdbcType=VARCHAR},
+      validatecode = #{validatecode,jdbcType=VARCHAR},
+      cid = #{cid,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=TIMESTAMP},
+      gender = #{gender,jdbcType=VARCHAR},
+      di_type = #{diType,jdbcType=INTEGER},
+      frontimg = #{frontimg,jdbcType=VARCHAR},
+      backimg = #{backimg,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      bedno = #{bedno,jdbcType=VARCHAR},
+      departmentid = #{departmentid,jdbcType=INTEGER},
+      doctorid = #{doctorid,jdbcType=INTEGER},
+      nurseid = #{nurseid,jdbcType=INTEGER},
+      instatus = #{instatus,jdbcType=INTEGER},
+      state = #{state,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
