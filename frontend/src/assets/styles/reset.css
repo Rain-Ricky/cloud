@@ -1,0 +1,130 @@
+@charset "utf-8";
+
+/*=========================Reset_start==========================*/
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+div,
+p,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+form,
+table,
+th,
+td,
+a,
+img,
+span,
+strong,
+var,
+em,
+input,
+textarea,
+select,
+option {
+    margin: 0;
+    padding: 0;
+}
+
+
+/*去内外边距*/
+
+html,
+body {
+    font-family: "微软雅黑", "宋体", Arail, Tabhoma;
+    text-align: left;
+}
+
+
+/*字体 文本居左*/
+
+ul {
+    list-style: none;
+}
+
+
+/*去ul li 小点*/
+
+img {
+    border: 0 none;
+}
+
+
+/*img IE6 兼容问题*/
+
+input,
+select,
+textarea {
+    outline: 0;
+}
+
+
+/*去除点击蓝框*/
+
+textarea {
+    resize: none;
+    overflow: auto;
+}
+
+
+/*锁定多行文本框大小 与文字超出出现滚动条*/
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+
+/*表格边框合并 边框间距0*/
+
+th,
+strong,
+var,
+em {
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+/*特殊文字粗细 样式显示正常*/
+
+a {
+    text-decoration: none;
+}
+
+
+/*a标签去下划线*/
+
+.clearfix:after {
+    clear: both;
+    content: "";
+    display: block;
+    height: 0;
+}
+
+
+/*清浮动*/
+
+a {
+    color: #000000;
+}
+
+
+/*==========================Reset_End===========================*/
+
+.bg16d {
+    background: #16dcb8;
+}
+
+.el-divider--horizontal {
+    margin: 0;
+}
