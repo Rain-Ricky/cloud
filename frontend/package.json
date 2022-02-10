@@ -19,7 +19,7 @@
         "@vue/cli-plugin-router": "~4.3.0",
         "@vue/cli-plugin-vuex": "~4.3.0",
         "@vue/cli-service": "~4.3.0",
-        "node-sass": "^4.12.0",
+        "node-sass": "^7.0.0",
         "sass-loader": "^8.0.2",
         "vue-template-compiler": "^2.6.11"
     }
